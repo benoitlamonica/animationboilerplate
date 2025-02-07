@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --color-protility-orange: #ff7c3b;
+  --color-protility-white: #ffffff;
+  --color-protility-black: #000000;
+  --color-protility-gray: var(--color-gray-50);
+}
+
+@layer base {
+  body {
+    @apply overflow-hidden bg-gray-50;
+  }
+
+  h2 {
+    @apply text-6xl font-black text-orange-500 uppercase mb-4;
+  }
+
+  p {
+    @apply text-3xl text-black font-thin;
+  }
+
+  canvas {
+    @apply fixed inset-0;
+  }
+}
+
+@layer components {
+  .title {
+    @apply fixed top-0 text-right p-2 w-full bg-white;
+  }
+
+  .title>h1 {
+    @apply leading-none text-4xl font-black text-orange-500 uppercase;
+  }
+
+  .title>small {
+    @apply text-black text-sm font-light;
+  }
+
+  button {
+    @apply bg-orange-500 text-white font-thin py-2 px-4 rounded;
+  }
+
+  .content {
+    @apply size-full flex items-center p-16 snap-start w-1/2;
+  }
+
+  .content-inner {
+    @apply p-16 rounded-lg;
+  }
+
+  #content-1 .content-inner {
+    @apply bg-transparent;
+  }
+
+  #content-1 h2 {
+    @apply text-[10rem] text-white;
+  }
+
+  #content-3 {
+    @apply ml-auto;
+  }
+
+  #content-4 {
+    @apply flex-col w-full text-center;
+  }
+
+  #content-5 h2 {
+    @apply text-8xl text-white;
+  }
+
+  #content-5 {
+    @apply bg-protility-black w-full text-center;
+  }
+
+  #content-5 .content-inner {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  #scroll-container {
+    @apply h-screen w-full snap-mandatory snap-y overflow-y-scroll relative z-10;
+  }
+}
