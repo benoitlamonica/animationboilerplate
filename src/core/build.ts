@@ -16,6 +16,9 @@ document.body.appendChild(renderer.domElement);
 export default async function build(
   onProgress?: (progress: ProgressEvent) => void
 ): Promise<Build> {
+  // Use onProgress only when loading large assets
+  console.log(onProgress);
+
   // Scene and Camera
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -29,8 +32,15 @@ export default async function build(
 
   // Create Model 
   const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const material = new THREE.MeshStandardMaterial({ 
+    color: 0x00ff00,
+    roughness: 0.5,
+    metalness: 0.5,
+  });
   const model = new THREE.Mesh(geometry, material);
+
+  model.castShadow = true; // Enable shadows for the model
+  model.receiveShadow = true; // Enable shadows for the model
 
   // Directional Light 1
   const light = new THREE.DirectionalLight(0xffffff, 5); // Increased intensity
@@ -42,20 +52,28 @@ export default async function build(
   light2.position.set(3, 1, 0);
   light2.castShadow = true;
 
+  // Last light for the front 
+  const light3 = new THREE.DirectionalLight(0xffffff, 2);
+  light3.position.set(0, -1, 2);
+
   // Ambient Light
   const ambientLight = new THREE.AmbientLight(0x404040, 5);
 
   // Optional: Add helper to visualize light position and direction
-  // const lightHelper = new THREE.DirectionalLightHelper(light, 1);
-  // scene.add(lightHelper);
+  const lightHelper = new THREE.DirectionalLightHelper(light, 1);
+  scene.add(lightHelper);
 
-  // const lightHelper2 = new THREE.DirectionalLightHelper(light2, 1);
-  // scene.add(lightHelper2);
+  const lightHelper2 = new THREE.DirectionalLightHelper(light2, 1);
+  scene.add(lightHelper2);
+
+  const lightHelper3 = new THREE.DirectionalLightHelper(light3, 1);
+  scene.add(lightHelper3);
 
   scene.add(
     model,
     light,
     light2,
+    light3,
     ambientLight
   )
 
